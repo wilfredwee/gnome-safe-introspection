@@ -21,20 +21,26 @@ class Extension {
 
         main.introspectService._senderChecker = new DBusSenderChecker(APP_ALLOWLIST);
 
+        const variant = '(a{ta{sv}})';
+
         Gio.DBus.session.call(
             'org.gnome.Shell.Introspect', 
             '/org/gnome/Shell/Introspect', 
             'org.gnome.Shell.Introspect', 
             'GetWindows', 
             null, 
-            new GLib.VariantType('(a{ta{sv}})'), 
+            new GLib.VariantType(variant), 
             Gio.DBusCallFlags.NONE, 
             -1, 
             null, 
             (connection, res) => { 
-                console.log("Inside callback hereh");
+                log("Inside callback hereh");
                 const reply = connection.call_finish(res); 
-                console.log("got reply: ", reply); 
+
+                log("got reply: ", reply); 
+
+                const replyUnpacked = reply.recursiveUnpack();
+                log("reply unpackged: ", JSON.stringify(replyUnpacked));
             }
         );
     }
