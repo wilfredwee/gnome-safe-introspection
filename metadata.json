@@ -1,0 +1,8 @@
+{
+  "name": "Safe Introspection",
+  "description": "Provides safe Introspection",
+  "uuid": "safeintrospection@wilfredwee.dev",
+  "shell-version": [
+    "42"
+  ]
+}
