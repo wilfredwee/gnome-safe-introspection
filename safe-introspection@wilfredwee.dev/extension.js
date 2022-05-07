@@ -57,8 +57,6 @@ class SafeIntrospect {
             return;
         }
 
-        log("Calling GetWindows in SafeIntrospection");
-
         const variant = '(a{ta{sv}})';
 
         Gio.DBus.session.call(
@@ -73,13 +71,10 @@ class SafeIntrospect {
             null,
             (connection, res) => {
                 try {
-                    log("Inside callback hereh");
                     const reply = connection.call_finish(res);
 
-                    log("got reply: ", reply);
 
                     const replyUnpacked = reply.deepUnpack();
-                    log("reply unpackged: ", JSON.stringify(replyUnpacked));
 
                     invocation.return_value(new GLib.Variant(variant, replyUnpacked));
                 } catch (e) {
