@@ -72,9 +72,12 @@ class SafeIntrospect {
             (connection, res) => {
                 try {
                     const reply = connection.call_finish(res);
-
-
                     const replyUnpacked = reply.deepUnpack();
+
+                    for (const [_windowId, windowProperties] of Object.entries(replyUnpacked[0])) {
+                        // Obfuscate the title.
+                        windowProperties['title'] = GLib.Variant.new_string('');
+                    }
 
                     invocation.return_value(new GLib.Variant(variant, replyUnpacked));
                 } catch (e) {
